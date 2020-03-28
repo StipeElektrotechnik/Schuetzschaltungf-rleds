@@ -1,0 +1,27 @@
+#include <Arduino.h>
+
+byte taster = 6;
+int tasterkontrolle = 0;
+
+void  setup()
+{
+pinMode(taster,OUTPUT);
+pinMode(7,OUTPUT);
+
+}
+
+
+void  loop()
+{
+
+tasterkontrolle = digitalRead(taster);
+
+if (tasterkontrolle == HIGH )
+  digitalWrite(7, HIGH);
+
+else
+{
+  digitalWrite(7, LOW);
+}
+
+}
