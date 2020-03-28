@@ -1,0 +1,93 @@
+#include <Arduino.h>
+
+void setup() {
+Serial.begin(9600);     // stelle Seriele verbindung zum MC her.
+//-------------------------------------------------------------------------------------------------------------------------------------
+pinMode(2, OUTPUT);     // schaltet Q3 und Q4 ab {LICHT GANZ HELL}          Q2
+pinMode(3, OUTPUT);     // Schaltet Q4 aus und Q3 an {LICHT 50% AN}         Q3
+pinMode(4, OUTPUT);     // Schaltet Q3 aus und Q4 an {LICHT FAST AUS}       Q4
+pinMode(5, OUTPUT);     // Schaltet das Netzteil ein.                       Q1
+//------------------------------------------------EINGÄNGE DEFINIERT------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------------------------------------------
+pinMode(6, INPUT);      // EIngang für NETZ
+pinMode(7, INPUT);      // EIngang für  {LICHT GANZ HELL}          Q2
+pinMode(8, INPUT);      // EIngang für  {LICHT 50% AN}             Q3
+pinMode(9, INPUT);      // EIngang für   {LICHT FAST AUS}          Q4
+pinMode(10,INPUT);       // SCHALTET ALLES AUS 
+}
+
+void loop() {
+//------------------------------------------------VARIABELN DEFINIERT AUSGÄNGE---------------------------------------------------------
+//-------------------------------------------------------------------------------------------------------------------------------------
+char Ausgang_LichtGanzHell = 2;   // variable zugeordnet für ganz helles Licht 
+char Ausgang_Licht50_00 = 3;      // variable zugeordnet für ganz 50% Licht 
+char Ausgang_LichtFastAus = 4;    // variable zugeordnet für Licht fast aus
+char Ausgang_NetzAN = 5;          // Schaltet Netzspannung an 
+//------------------------------------------------VARIABELN DEFINIERT EINGÄNGE---------------------------------------------------------
+//-------------------------------------------------------------------------------------------------------------------------------------
+char EingangGanzHell = 6;       // variable zugeordnet für ganz helles Licht 
+char Eingang50_00 = 7;          // variable zugeordnet für ganz 50% Licht 
+char EingangLichtFastAus = 8;   // variable zugeordnet für Licht fast aus 
+char EingangNetzAN = 9;         // Schaltet Netzspannung an 
+char EINGANG_AUSSCHALTER = 10;          // Schaltet ALLES
+//------------------------------------------------MERKER DEFINIERT EINGÄNGE-----------------------------------------------------------
+//-------------------------------------------------------------------------------------------------------------------------------------
+
+int MERKER_EingangNetzAN = 0;
+int MERKER_EingangGanzHell = 0;
+int MERKER_EingangLichtFastAus = 0;
+int MERKER_Eingang50_00 = 0;
+int MERKER_EINGANG_AUSSCHALTER = 0;
+//------------------------------------------------SCHALTET NETZ AN--------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------------------------------------------
+if (digitalRead(EingangNetzAN)== HIGH or MERKER_EingangNetzAN == 1)
+{
+  digitalWrite(Ausgang_NetzAN,HIGH);
+  MERKER_EingangGanzHell = 1;
+  Serial.println("EingangNetzAN ist EIN");
+}
+//-------------------------------------------------SCHALTET {LICHT GANZ HELL}  --------------------------------------------------------
+//-------------------------------------------------------------------------------------------------------------------------------------
+if (digitalRead(EingangGanzHell)== HIGH or MERKER_EingangNetzAN == 1)
+{
+  digitalWrite(Ausgang_LichtGanzHell,1);
+  MERKER_EingangNetzAN = 1;
+  Serial.println("Ausgang_LichtGanzHell ist EIN");
+}
+//------------------------------------------------MSCHALTET {LICHT FAST AUS}   --------------------------------------------------------
+//-------------------------------------------------------------------------------------------------------------------------------------
+if (digitalRead(EingangLichtFastAus)== HIGH or MERKER_EingangLichtFastAus == 1)
+{
+  digitalWrite(Ausgang_LichtFastAus,1);
+  MERKER_EingangLichtFastAus = 1;
+  Serial.println("EingangLichtFastAus ist EIN");
+}
+//------------------------------------------------MSCHALTET {LICHT 50%}  --------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------------------------------------------
+if (digitalRead(Eingang50_00)== HIGH or MERKER_Eingang50_00  == 1)
+{
+  digitalWrite(Ausgang_Licht50_00,1);
+  MERKER_Eingang50_00 = 1;
+  Serial.println("Eingang50_00 ist EIN");
+}
+//------------------------------------------------MSCHALTET {LICHT GANZ AUS }  --------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------------------------------------------
+if (digitalRead(EINGANG_AUSSCHALTER)== HIGH or MERKER_EINGANG_AUSSCHALTER == 1)
+{
+  digitalWrite(Ausgang_NetzAN,0);
+  Serial.println("Ausgang_NetzAN ist AUS");
+  digitalWrite(Ausgang_LichtFastAus,0);
+  Serial.println("Ausgang_LichtFastAus ist AUS");
+  digitalWrite(Ausgang_Licht50_00,0);
+  Serial.println("Ausgang_Licht50_00 ist AUS");
+  digitalWrite(Ausgang_LichtGanzHell,0);
+  Serial.println("Ausgang_LichtGanzHell ist AUS");
+
+  MERKER_EINGANG_AUSSCHALTER = 1;
+}
+
+
+
+Serial.print("HAllo");
+Serial.end();
+}
