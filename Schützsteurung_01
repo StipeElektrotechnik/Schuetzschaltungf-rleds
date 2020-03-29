@@ -1,6 +1,10 @@
 #include <Arduino.h>
+#include<Wire.h>
+#include <LiquidCrystal_I2C.h>
 
 void setup() {
+lcd.init();             //LCD SETUP startet sich 
+lcd.backlight();        // LCD Hintergrund beleuchtung geht an.
 Serial.begin(9600);     // stelle Seriele verbindung zum MC her.
 //-------------------------------------------------------------------------------------------------------------------------------------
 pinMode(2, OUTPUT);     // schaltet Q3 und Q4 ab {LICHT GANZ HELL}          Q2
@@ -45,6 +49,8 @@ if (digitalRead(EingangNetzAN)== HIGH or MERKER_EingangNetzAN == 1)
   digitalWrite(Ausgang_NetzAN,HIGH);
   MERKER_EingangGanzHell = 1;
   Serial.println("EingangNetzAN ist EIN");
+  /*test*/lcd.setCursor(0,0)// Zeilenanfrag wird definiert 
+   /*test*/lcd.print("LED Treiber AN"); // 
 }
 //-------------------------------------------------SCHALTET {LICHT GANZ HELL}  --------------------------------------------------------
 //-------------------------------------------------------------------------------------------------------------------------------------
