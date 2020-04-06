@@ -1,0 +1,74 @@
+#include<Arduino.h>
+
+ 
+const int Einschalter_1 = 2;     // Schaltet Blau 
+const int Einschalter_2 = 4;     //Schaltet Rot1 
+const int Einschalter_3 = 5;     //Schaltet Rot2 
+const int Ausschalter = 3;
+const int LED_12 =  12;      // ROTE LED 
+const int LED_11 =  11;      // ROTE LED
+const int LED_10 = 10;       // BLAUE LED
+// variables will change:
+int Einschalt_Merker_Rot_2 = 0;
+int Einschalter_Merker_ROT = 0;         // variable for reading the pushbutton status
+int Einschalter_Meker_BLAU = 0;
+int Ausschalter_Merker = 0;
+
+
+void setup() {
+  // initialize the LED pin as an output:
+  pinMode(LED_12,OUTPUT);
+  pinMode(LED_11, OUTPUT);
+  pinMode(LED_10,OUTPUT);
+  // initialize the pushbutton pin as an input:
+  pinMode(Einschalter_1, INPUT);
+  pinMode(Einschalter_2, INPUT);
+  pinMode(Ausschalter, INPUT);
+}
+
+void loop() {
+  // read the state of the pushbutton value:
+  Einschalt_Merker_Rot_2 = digitalRead(Einschalter_3);
+  Einschalter_Merker_ROT = digitalRead(Einschalter_1);
+  Einschalter_Meker_BLAU = digitalRead(Einschalter_2);
+  Ausschalter_Merker = digitalRead(Ausschalter);
+  // check if the pushbutton is pressed. If it is, the buttonState is HIGH:
+    if (Einschalt_Merker_Rot_2 == HIGH ){      // Schaltet BLAU 
+    digitalWrite(LED_10, HIGH);             // BLAUE LED
+  }
+  else if (Ausschalter_Merker == HIGH)
+  {
+    digitalWrite(LED_10, LOW);
+  }
+  
+  
+  
+  
+  
+  if (Einschalter_Merker_ROT == HIGH  ) {         // Schaltet ROT 
+    // turn LED on:
+    digitalWrite(LED_12, HIGH);
+    
+  }
+  else if ((Ausschalter_Merker == HIGH))
+  {
+    digitalWrite(LED_12, LOW);
+    }
+  
+
+  if (Einschalter_Meker_BLAU == HIGH ){      // Schaltet BLAU 
+    digitalWrite(LED_11, HIGH);             // BLAUE LED
+  }
+  else if (Ausschalter_Merker == HIGH)
+  {
+    digitalWrite(LED_11, LOW);
+  }
+  
+
+
+
+
+
+}
+
+
