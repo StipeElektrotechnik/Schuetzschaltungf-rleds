@@ -1,9 +1,11 @@
 #include<Arduino.h>
-
+#include <Wire.h> // Wire Bibliothek einbinden
+#include <LiquidCrystal_I2C.h> // Vorher hinzugefügte LiquidCrystal_I2C Bibliothek einbinden
+LiquidCrystal_I2C lcd(0x27, 16, 2); 
  
 const int Einschalter_1 = 2;     // Schaltet Blau 
 const int Einschalter_2 = 4;     //Schaltet Rot1 
-const int Einschalter_3 = 5;     //Schaltet Rot2 
+const int Einschalter_3 = 5;     //2%
 const int Ausschalter = 3;
 const int LED_12 =  12;      // ROTE LED 
 const int LED_11 =  11;      // ROTE LED
@@ -16,6 +18,9 @@ int Ausschalter_Merker = 0;
 
 
 void setup() {
+
+  lcd.init(); //Im Setup wird der LCD gestartet 
+  lcd.backlight(); //Hintergrundbeleuchtung einschalten (lcd.noBacklight(); schaltet die Beleuchtung aus).
   // initialize the LED pin as an output:
   pinMode(LED_12,OUTPUT);
   pinMode(LED_11, OUTPUT);
@@ -33,12 +38,24 @@ void loop() {
   Einschalter_Meker_BLAU = digitalRead(Einschalter_2);
   Ausschalter_Merker = digitalRead(Ausschalter);
   // check if the pushbutton is pressed. If it is, the buttonState is HIGH:
-    if (Einschalt_Merker_Rot_2 == HIGH ){      // Schaltet BLAU 
+    if (Einschalt_Merker_Rot_2 == HIGH ){      // Schaltet BLAU                                                                      50%
     digitalWrite(LED_10, HIGH);             // BLAUE LED
+    lcd.setCursor(0, 0);//Hier wird die Position des ersten Zeichens festgelegt. In diesem Fall bedeutet (0,0) das erste Zeichen in der ersten Zeile. 
+    lcd.print("Licht ist auf 50%"); 
+    lcd.setCursor(0,1);
+    lcd.print("                       ");
+ 
+
+    
+    //__________________
   }
-  else if (Ausschalter_Merker == HIGH)
+  else if (Ausschalter_Merker == HIGH)    
   {
     digitalWrite(LED_10, LOW);
+    lcd.setCursor(0,0);
+    lcd.print("Licht ist auf      ");
+    lcd.setCursor(0,1);
+    lcd.print("min. Hellichkeit");
   }
   
   
@@ -56,8 +73,14 @@ void loop() {
     }
   
 
-  if (Einschalter_Meker_BLAU == HIGH ){      // Schaltet BLAU 
-    digitalWrite(LED_11, HIGH);             // BLAUE LED
+  if (Einschalter_Meker_BLAU == HIGH ){      // Schaltet BLAU                                                             GANZ AN 
+    digitalWrite(LED_11 , HIGH);             // BLAUE LED
+    digitalWrite(LED_10, HIGH);
+    lcd.setCursor(0, 0);//Hier wird die Position des ersten Zeichens festgelegt. In diesem Fall bedeutet (0,0) das erste Zeichen in der ersten Zeile. 
+    lcd.print("Licht  Ganz Hell"); 
+    lcd.setCursor(0,1);
+    lcd.print("                    ");
+ 
   }
   else if (Ausschalter_Merker == HIGH)
   {
